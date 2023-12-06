@@ -1,0 +1,15 @@
+Q:\GITHub\mathfizic\Затухающие колебания\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+Q:\GITHub\mathfizic\Затухающие колебания\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+Q:\GITHub\mathfizic\Затухающие колебания\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+Q:\GITHub\mathfizic\Затухающие колебания\WindowsFormsApp1\bin\Debug\NOpenCL.dll
+Q:\GITHub\mathfizic\Затухающие колебания\WindowsFormsApp1\bin\Debug\NOpenCL.pdb
+Q:\GITHub\mathfizic\Затухающие колебания\WindowsFormsApp1\bin\Debug\NOpenCL.xml
+Q:\GITHub\mathfizic\Затухающие колебания\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.AssemblyReference.cache
+Q:\GITHub\mathfizic\Затухающие колебания\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.SuggestedBindingRedirects.cache
+Q:\GITHub\mathfizic\Затухающие колебания\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+Q:\GITHub\mathfizic\Затухающие колебания\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+Q:\GITHub\mathfizic\Затухающие колебания\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
+Q:\GITHub\mathfizic\Затухающие колебания\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+Q:\GITHub\mathfizic\Затухающие колебания\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CopyComplete
+Q:\GITHub\mathfizic\Затухающие колебания\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+Q:\GITHub\mathfizic\Затухающие колебания\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
