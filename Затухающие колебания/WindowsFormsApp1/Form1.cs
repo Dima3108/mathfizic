@@ -14,10 +14,10 @@ namespace WindowsFormsApp1
     public partial class Form1 : Form
     {
         // Device device = 0;
-        private const int N = 1000;
-        private const int THREAD_COUNT = 1000;
-        private const int X0 = -1000;
-        private const int MAX_TIME_SEC = 60 * 2;
+        private const int N = 1000000;
+        private const int THREAD_COUNT = N;
+        private const int X0 = 0;
+        private const int MAX_TIME_SEC = 300;
         #region OCL
  private Platform platform;
         private Device device;
@@ -40,10 +40,21 @@ i+="+THREAD_COUNT.ToString()+@";
         #endregion
         private int TIME = 0;
         private double[] Y = new double[N];
+        private Chart chart;
+        private ChartArea area = new ChartArea("y=sin(e^-x)");
+
         public Form1()
         {
             InitializeComponent();
+            chart = new Chart();
+            chart.Parent = this;
+            chart.Dock = DockStyle.Fill;
+            //chart.ResumeLayout();
+            chart.ChartAreas.Add(area);
             #region NOpenCL_Init
+#if DEBUG
+            System.IO.File.WriteAllText("debugkernel.cl", cl_kernel);
+#endif
             platform = Platform.GetPlatforms()[0];
             device = platform.GetDevices()[0];
             context = Context.Create(device);
@@ -64,68 +75,111 @@ i+="+THREAD_COUNT.ToString()+@";
         private void button1_Click(object sender, EventArgs e)
         {
             const string series_name = "Function";
+            button1.Visible = false;
+            TIME = 0;
             while(TIME<MAX_TIME_SEC-1)
             {
+               
 #if DEBUG
                 Console.WriteLine(TIME);
 #endif
-                chart1.Visible = false;
+                //chart1.Visible = false;
+
                 #region WRITE
-                // chart1.ChartAreas[0] = new ChartArea();
-               // chart1.ChartAreas[0].AxisX = new Axis();
-#if DEBUG
-                Console.WriteLine("set x");
-#endif
-                chart1.ChartAreas[0].AxisX.Maximum = //Y.Max();
-                    (TIME * N) + N;
+                /*  
+    #if DEBUG
+                    Console.WriteLine("set x");
+    #endif
+                    chart1.ChartAreas[0].AxisX.Maximum = 
+                        (TIME * N) + N;
+                        ;
+
+                    chart1.ChartAreas[0].AxisX.Minimum = 
+                        TIME*N;
+                    chart1.ChartAreas[0].AxisX.Crossing = 0;
+                    chart1.ChartAreas[0].AxisX.Name = "X";
+    #if DEBUG
+                    Console.WriteLine("set y");
+    #endif
+                     chart1.ChartAreas[0].AxisY.Minimum = Y.Max();
+                     chart1.ChartAreas[0].AxisY.Maximum = Y.Min();
+                    chart1.ChartAreas[0].AxisY.Crossing = 0;
+                    chart1.ChartAreas[0].AxisY.Name = "Y";
+    #if DEBUG
+                    Console.WriteLine("set type");
+    #endif
+                    chart1.Series[series_name].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+                    chart1.Series[series_name].YValueType = ChartValueType.Double;
+                    chart1.Series[series_name].XAxisType = AxisType.Primary;
+                    chart1.Series[series_name].YAxisType = AxisType.Primary;
+    #if DEBUG
+                    Console.WriteLine("set color");
+
+
+                    chart1.Series[series_name].Color = Color.Beige;
+    #endif
+                    chart1.Series[series_name].Points.Clear();
+                    chart1.Series[series_name].ResetIsValueShownAsLabel();
+    chart1.ResetAutoValues();
+                    */
+               // chart1.Dispose();
+               // var area = new ChartArea("y=sin(e^-x)");
+                area.AxisX.Crossing = 0;
+                area.AxisX.Minimum =N * TIME
                     ;
-               // chart1.ChartAreas[0].AxisX.
-                chart1.ChartAreas[0].AxisX.Minimum = //Y.Min();
-                    TIME*N;
-                chart1.ChartAreas[0].AxisX.Name = "X";
-#if DEBUG
-                Console.WriteLine("set y");
-#endif
-                chart1.ChartAreas[0].AxisY.Minimum = Y.Max();
-                chart1.ChartAreas[0].AxisY.Maximum = Y.Min();
-                chart1.ChartAreas[0].AxisY.Name = "Y";
-#if DEBUG
-                Console.WriteLine("set type");
-#endif
-                chart1.Series[series_name].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-                chart1.Series[series_name].YValueType = ChartValueType.Double;
-                chart1.Series[series_name].XAxisType = AxisType.Primary;
-                chart1.Series[series_name].YAxisType = AxisType.Primary;
-#if DEBUG
-                Console.WriteLine("set color");
-
-
-                chart1.Series[series_name].Color = Color.Beige;
-#endif
-                chart1.Series[series_name].Points.Clear();
-                chart1.Series[series_name].ResetIsValueShownAsLabel();
-chart1.ResetAutoValues();
+                area.AxisX.Maximum =N+( N * TIME)
+                    ;
+                 area.AxisY.Crossing = 0;
+                area.AxisY.Minimum = -1;
+                area.AxisY.Maximum = 1; 
+                area.AxisX.Interval = N/5;
+                area.AxisY.Interval = N/5;
+                var series = new Series();
+                series.ChartType = SeriesChartType.Line;
+                series.ChartArea = "y=sin(e^-x)";
+                series.XAxisType = AxisType.Primary;
+                series.YAxisType = AxisType.Primary;
+                series.XValueType = ChartValueType.Double;
+                series.YValueType = ChartValueType.Double;
+               // series.
+              //  var chart = new Chart();
+               
+                chart.Series.Add(series);
+                series.Color = Color.Red;
+               // chart1 = chart;
+                // chart1.Series.Clear();
+                // var numbs=chart1.Series.Add(series_name);
 #if DEBUG
                 Console.WriteLine("set points");
 #endif
                 for(int i=0;i<N; i++)
                 {
-                    chart1.Series[series_name].Points.Add(new System.Windows.Forms.DataVisualization.Charting.DataPoint((TIME * N) + (i / N), Y[i]));
+                    series.Points.Add(new System.Windows.Forms.DataVisualization.Charting.DataPoint((TIME * N) + (i / N), Y[i]));
                 }
-                chart1.Series[series_name].Enabled = true;
-                chart1.Visible = true;
+
+              //  chart.DataBind();
+               // chart.BeginInit();
+                // chart1.BeginInit();
+                //chart1.EndInit();
+                //chart1.Invalidate();
+                //chart1.Series[series_name].Enabled = true;
+                //chart1.Visible = true;
                 #endregion
                 TIME += 1;
-                Task delay = Task.Run(delegate { Task.Delay(1000*100); });
+                chart.BeginInit(); 
+                Task delay = Task.Run(delegate { Task.Delay(2000); });
 #if DEBUG
                 Console.WriteLine("run ocl");
 #endif
                 #region OCL
+
+                delay.Wait();
+                chart.EndInit();
                 using(Kernel kern = clprogram.CreateKernel("kernels"))
                 {
                     kern.Arguments[0].SetValue(oBuffer);
                     kern.Arguments[1].SetValue(TIME);
-                    commandQueue.EnqueueNDRangeKernel(kern, (IntPtr)RoundUp(256, THREAD_COUNT), (IntPtr)256);
+                    commandQueue.EnqueueNDRangeKernel(kern, (IntPtr)RoundUp(1, THREAD_COUNT), (IntPtr)1);
                     commandQueue.Finish();
                     unsafe
                     {
@@ -139,10 +193,18 @@ chart1.ResetAutoValues();
                 #endregion
 #if DEBUG
                 Console.WriteLine("end cl");
+                Console.WriteLine($"{Y[0]}{" "}:{Y[10]}{" "}:{Y[25]}:max={Y.Max()},min={Y.Min()}");
 #endif
-                 delay.Wait();
-
+               // chart.EndInit();
+  //chart.Invalidate();
+              //   delay.Wait();
+             
+               
+               // chart.Focus();
+               // series.Points.Clear();
+//chart.Dispose();
             }
+            button1.Visible = true;
         }
         ~Form1(){
             oBuffer.Dispose();
